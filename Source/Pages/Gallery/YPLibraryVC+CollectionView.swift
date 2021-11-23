@@ -183,6 +183,7 @@ extension YPLibraryVC: UICollectionViewDelegate {
             let cellIsCurrentlySelected = previouslySelectedIndexPath.row == currentlySelectedIndex
             if cellIsInTheSelectionPool {
                 if cellIsCurrentlySelected {
+                    delegate?.libraryViewDidDeselect(asset: getAsset(indexPath: previouslySelectedIndexPath))
                     deselect(indexPath: indexPath)
                 }
             } else if isLimitExceeded == false {
@@ -192,6 +193,7 @@ extension YPLibraryVC: UICollectionViewDelegate {
             collectionView.reloadItems(at: [indexPath])
             collectionView.reloadItems(at: [previouslySelectedIndexPath])
         } else {
+            delegate?.libraryViewDidDeselect(asset: getAsset(indexPath: previouslySelectedIndexPath))
             selectedItems.removeAll()
             addToSelection(indexPath: indexPath)
             
@@ -207,7 +209,6 @@ extension YPLibraryVC: UICollectionViewDelegate {
            let thumbnail = selectedCell.imageView.image {
             delegate?.libraryViewDidselect(asset: getAsset(indexPath: indexPath), image: thumbnail)
         }
-        delegate?.libraryViewDidDeselect(asset: getAsset(indexPath: previouslySelectedIndexPath))
     }
     
     public func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
