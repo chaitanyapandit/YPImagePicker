@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Photos
 
 @objc
 public protocol YPLibraryViewDelegate: AnyObject {
@@ -14,7 +15,7 @@ public protocol YPLibraryViewDelegate: AnyObject {
     func libraryViewStartedLoadingImage()
     func libraryViewFinishedLoading()
     func libraryViewDidToggleMultipleSelection(enabled: Bool)
-    func libraryViewDidDeselect(index: Int)
+    func libraryViewDidDeselect(asset: PHAsset)
     func libraryViewShouldAddToSelection(indexPath: IndexPath, numSelections: Int) -> Bool
     func libraryViewHaveNoItems()
 }

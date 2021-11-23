@@ -274,10 +274,10 @@ extension ExampleViewController {
 
 // YPImagePickerDelegate
 extension ExampleViewController: YPImagePickerDelegate {
-    func didDeselectAt(index: Int) {
-        print(index)
+    func didDeselectAsset(asset: PHAsset) {
+        print(asset)
     }
-        
+            
     func imagePickerHasNoItemsInLibrary(_ picker: YPImagePicker) {
         // PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: self)
     }

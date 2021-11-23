@@ -12,7 +12,7 @@ import Photos
 
 public protocol YPImagePickerDelegate: AnyObject {
     func imagePickerHasNoItemsInLibrary(_ picker: YPImagePicker)
-    func didDeselectAt(index: Int)
+    func didDeselectAsset(asset: PHAsset)
     func shouldAddToSelection(indexPath: IndexPath, numSelections: Int) -> Bool
 }
 
@@ -170,10 +170,10 @@ open class YPImagePicker: UINavigationController {
 }
 
 extension YPImagePicker: YPPickerVCDelegate {
-    func didDeselectAt(index: Int) {
-        self.imagePickerDelegate?.didDeselectAt(index: index)
+    func didDeselectAsset(asset: PHAsset) {
+        self.imagePickerDelegate?.didDeselectAsset(asset: asset)
     }
-    
+        
     func libraryHasNoItems() {
         self.imagePickerDelegate?.imagePickerHasNoItemsInLibrary(self)
     }

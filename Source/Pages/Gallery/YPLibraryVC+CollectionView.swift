@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Photos
 
 extension YPLibraryVC {
     var isLimitExceeded: Bool { return selectedItems.count >= YPConfig.library.maxNumberOfItems }
@@ -96,6 +97,11 @@ extension YPLibraryVC {
 		})
     }
     
+    /// Get's asset at Index
+    func getAsset(indexPath: IndexPath) -> PHAsset {
+        return mediaManager.fetchResult[indexPath.item]
+    }
+    
     /// Checks if there can be selected more items. If no - present warning.
     func checkLimit() {
         v.maxNumberWarningView.isHidden = !isLimitExceeded || multipleSelectionEnabled == false
@@ -183,11 +189,9 @@ extension YPLibraryVC: UICollectionViewDelegate {
                 addToSelection(indexPath: indexPath)
             }
             // Report the delegate about the removed indexPath
-            delegate?.libraryViewDidDeselect(index: previouslySelectedIndexPath.row)
             collectionView.reloadItems(at: [indexPath])
             collectionView.reloadItems(at: [previouslySelectedIndexPath])
         } else {
-            delegate?.libraryViewDidDeselect(index: previouslySelectedIndexPath.row)
             selectedItems.removeAll()
             addToSelection(indexPath: indexPath)
             
@@ -199,6 +203,7 @@ extension YPLibraryVC: UICollectionViewDelegate {
                 previousCell.isSelected = false
             }
         }
+        delegate?.libraryViewDidDeselect(asset: getAsset(indexPath: previouslySelectedIndexPath))
     }
     
     public func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
