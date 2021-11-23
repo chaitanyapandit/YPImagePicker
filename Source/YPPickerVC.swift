@@ -325,7 +325,7 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
                 self.didSelectItems?([YPMediaItem
                                         .video(v: video)])
             }, multipleItemsCallback: { items in
-                self.done()
+                self.didSelectItems?(items)
             })
         }
     }

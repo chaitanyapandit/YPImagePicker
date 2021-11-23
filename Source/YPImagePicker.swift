@@ -23,9 +23,7 @@ open class YPImagePicker: UINavigationController {
     // MARK: - Public
 
     public weak var imagePickerDelegate: YPImagePickerDelegate?
-    
-    public var done: (() -> Void)?
-    
+        
     public func didFinishPicking(completion: @escaping DidFinishPickingCompletion) {
         _didFinishPicking = completion
     }
@@ -75,9 +73,6 @@ open class YPImagePicker: UINavigationController {
         super.viewDidLoad()
         picker.didClose = { [weak self] in
             self?._didFinishPicking?([], true)
-        }
-        picker.didFinish = { [weak self] in
-            self?.done?()
         }
         viewControllers = [picker]
         setupLoadingView()
