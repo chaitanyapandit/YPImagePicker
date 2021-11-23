@@ -61,7 +61,6 @@ extension YPLibraryVC {
 			$0.assetIdentifier == mediaManager.fetchResult[indexPath.row].localIdentifier
 		}) {
             selectedItems.remove(at: positionIndex)
-
             // Refresh the numbers
             let selectedIndexPaths = selectedItems.map { IndexPath(row: $0.index, section: 0) }
             v.collectionView.reloadItems(at: selectedIndexPaths)
@@ -183,9 +182,12 @@ extension YPLibraryVC: UICollectionViewDelegate {
             } else if isLimitExceeded == false {
                 addToSelection(indexPath: indexPath)
             }
+            // Report the delegate about the removed indexPath
+            delegate?.libraryViewDidDeselect(index: previouslySelectedIndexPath.row)
             collectionView.reloadItems(at: [indexPath])
             collectionView.reloadItems(at: [previouslySelectedIndexPath])
         } else {
+            delegate?.libraryViewDidDeselect(index: previouslySelectedIndexPath.row)
             selectedItems.removeAll()
             addToSelection(indexPath: indexPath)
             
