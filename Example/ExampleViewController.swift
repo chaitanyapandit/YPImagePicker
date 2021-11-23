@@ -274,6 +274,10 @@ extension ExampleViewController {
 
 // YPImagePickerDelegate
 extension ExampleViewController: YPImagePickerDelegate {
+    func didSelectAsset(asset: PHAsset, image: UIImage) {
+        print(asset)
+    }
+    
     func didDeselectAsset(asset: PHAsset) {
         print(asset)
     }

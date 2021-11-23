@@ -157,7 +157,7 @@ extension YPLibraryVC: UICollectionViewDelegate {
         } else {
             cell.multipleSelectionIndicator.set(number: nil)
         }
-
+        
         // Prevent weird animation where thumbnail fills cell on first scrolls.
         UIView.performWithoutAnimation {
             cell.layoutIfNeeded()
@@ -202,6 +202,10 @@ extension YPLibraryVC: UICollectionViewDelegate {
             if let previousCell = collectionView.cellForItem(at: previouslySelectedIndexPath) as? YPLibraryViewCell {
                 previousCell.isSelected = false
             }
+        }
+        if let selectedCell = collectionView.cellForItem(at: indexPath) as? YPLibraryViewCell,
+           let thumbnail = selectedCell.imageView.image {
+            delegate?.libraryViewDidselect(asset: getAsset(indexPath: indexPath), image: thumbnail)
         }
         delegate?.libraryViewDidDeselect(asset: getAsset(indexPath: previouslySelectedIndexPath))
     }

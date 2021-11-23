@@ -12,6 +12,7 @@ import Photos
 
 protocol YPPickerVCDelegate: AnyObject {
     func libraryHasNoItems()
+    func didSelectAsset(asset: PHAsset, image: UIImage)
     func didDeselectAsset(asset: PHAsset)
     func shouldAddToSelection(indexPath: IndexPath, numSelections: Int) -> Bool
 }
@@ -324,7 +325,7 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
                 self.didSelectItems?([YPMediaItem
                                         .video(v: video)])
             }, multipleItemsCallback: { items in
-                self.didFinish?()
+                self.done()
             })
         }
     }
@@ -337,6 +338,9 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
 }
 
 extension YPPickerVC: YPLibraryViewDelegate {
+    public func libraryViewDidselect(asset: PHAsset, image: UIImage) {
+        self.pickerVCDelegate?.didSelectAsset(asset: asset, image: image)
+    }
     
     public func libraryViewDidDeselect(asset: PHAsset) {
         self.pickerVCDelegate?.didDeselectAsset(asset: asset)
