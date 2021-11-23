@@ -29,6 +29,7 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
     
     /// Private callbacks to YPImagePicker
     public var didClose:(() -> Void)?
+    public var didFinish:(() -> Void)?
     public var didSelectItems: (([YPMediaItem]) -> Void)?
     
     enum Mode {
@@ -323,7 +324,7 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
                 self.didSelectItems?([YPMediaItem
                                         .video(v: video)])
             }, multipleItemsCallback: { items in
-                self.didSelectItems?(items)
+                self.didFinish?()
             })
         }
     }
