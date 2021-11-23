@@ -188,6 +188,10 @@ extension YPLibraryVC: UICollectionViewDelegate {
                 }
             } else if isLimitExceeded == false {
                 addToSelection(indexPath: indexPath)
+                if let selectedCell = collectionView.cellForItem(at: indexPath) as? YPLibraryViewCell,
+                   let thumbnail = selectedCell.imageView.image {
+                    delegate?.libraryViewDidselect(asset: getAsset(indexPath: indexPath), image: thumbnail)
+                }
             }
             // Report the delegate about the removed indexPath
             collectionView.reloadItems(at: [indexPath])
@@ -196,7 +200,10 @@ extension YPLibraryVC: UICollectionViewDelegate {
             delegate?.libraryViewDidDeselect(asset: getAsset(indexPath: previouslySelectedIndexPath))
             selectedItems.removeAll()
             addToSelection(indexPath: indexPath)
-            
+            if let selectedCell = collectionView.cellForItem(at: indexPath) as? YPLibraryViewCell,
+               let thumbnail = selectedCell.imageView.image {
+                delegate?.libraryViewDidselect(asset: getAsset(indexPath: indexPath), image: thumbnail)
+            }
             // Force deseletion of previously selected cell.
             // In the case where the previous cell was loaded from iCloud, a new image was fetched
             // which triggered photoLibraryDidChange() and reloadItems() which breaks selection.
@@ -204,10 +211,6 @@ extension YPLibraryVC: UICollectionViewDelegate {
             if let previousCell = collectionView.cellForItem(at: previouslySelectedIndexPath) as? YPLibraryViewCell {
                 previousCell.isSelected = false
             }
-        }
-        if let selectedCell = collectionView.cellForItem(at: indexPath) as? YPLibraryViewCell,
-           let thumbnail = selectedCell.imageView.image {
-            delegate?.libraryViewDidselect(asset: getAsset(indexPath: indexPath), image: thumbnail)
         }
     }
     
