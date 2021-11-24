@@ -195,14 +195,14 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
             if selectedItems.isEmpty && YPConfig.library.preSelectItemOnMultipleSelection,
 				delegate?.libraryViewShouldAddToSelection(indexPath: IndexPath(row: currentlySelectedIndex, section: 0),
 														  numSelections: selectedItems.count) ?? true {
-                let asset = mediaManager.fetchResult[currentlySelectedIndex]
-                selectedItems = [
-                    YPLibrarySelection(index: currentlySelectedIndex,
-                                       cropRect: v.currentCropRect(),
-                                       scrollViewContentOffset: v.assetZoomableView!.contentOffset,
-                                       scrollViewZoomScale: v.assetZoomableView!.zoomScale,
-                                       assetIdentifier: asset.localIdentifier)
-                ]
+//                let asset = mediaManager.fetchResult[currentlySelectedIndex]
+//                selectedItems = [
+//                    YPLibrarySelection(index: currentlySelectedIndex,
+//                                       cropRect: v.currentCropRect(),
+//                                       scrollViewContentOffset: v.assetZoomableView!.contentOffset,
+//                                       scrollViewZoomScale: v.assetZoomableView!.zoomScale,
+//                                       assetIdentifier: asset.localIdentifier)
+//                ]
             }
         } else {
             selectedItems.removeAll()

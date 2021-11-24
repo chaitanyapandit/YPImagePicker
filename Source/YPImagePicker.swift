@@ -22,6 +22,18 @@ open class YPImagePicker: UINavigationController {
 
     // MARK: - Public
 
+    public var rightBarButton: UIBarButtonItem? {
+        didSet {
+            self.picker.rightBarButton = self.rightBarButton
+        }
+    }
+    
+    public var leftBarButton: UIBarButtonItem? {
+        didSet {
+            self.picker.leftBarButton = self.leftBarButton
+        }
+    }
+    
     public weak var imagePickerDelegate: YPImagePickerDelegate?
         
     public func didFinishPicking(completion: @escaping DidFinishPickingCompletion) {
