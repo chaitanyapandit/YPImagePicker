@@ -24,7 +24,7 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
     var initialStatusBarHidden = false
     weak var pickerVCDelegate: YPPickerVCDelegate?
     
-    public var rightBarButton: UIBarButtonItem? {
+    public var rightBarButton: UIBarButtonItem?  {
         didSet {
            updateUI()
         }
@@ -58,6 +58,10 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
     var mode = Mode.camera
     
     var capturedImage: UIImage?
+    
+    @objc func tapped() {
+        
+    }
     
     open override func viewDidLoad() {
         super.viewDidLoad()
@@ -288,6 +292,9 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
                                                                target: self,
                                                                action: #selector(close))
         }
+        else if self.leftBarButton != nil {
+            navigationItem.leftBarButtonItem = self.leftBarButton
+        }
         switch mode {
         case .library:
             setTitleViewWithTitle(aTitle: libraryVC?.title ?? "")
@@ -296,7 +303,7 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
                                                                 target: self,
                                                                 action: #selector(done))
             
-//            navigationItem.rightBarButtonItem?.tintColor = YPConfig.colors.tintColor
+            navigationItem.rightBarButtonItem?.tintColor = self.rightBarButton == nil ? YPConfig.colors.tintColor : nil
 
             // Disable Next Button until minNumberOfItems is reached.
             navigationItem.rightBarButtonItem?.isEnabled = self.rightBarButton != nil ? true :

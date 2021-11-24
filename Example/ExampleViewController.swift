@@ -157,15 +157,16 @@ class ExampleViewController: UIViewController {
 
         config.maxCameraZoomFactor = 2.0
 
+        config.library.defaultMultipleSelection = true
         config.library.maxNumberOfItems = 5
         config.gallery.hidesRemoveButton = false
-
+        config.library.preSelectItemOnMultipleSelection = false
         /* Disable scroll to change between mode */
         // config.isScrollToChangeModesEnabled = false
         // config.library.minNumberOfItems = 2
 
         /* Skip selection gallery after multiple selections */
-        // config.library.skipSelectionsGallery = true
+         config.library.skipSelectionsGallery = true
 
         /* Here we use a per picker configuration. Configuration is always shared.
            That means than when you create one picker with configuration, than you can create other picker with just

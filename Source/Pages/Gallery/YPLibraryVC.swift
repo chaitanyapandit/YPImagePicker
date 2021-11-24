@@ -14,7 +14,7 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
     internal weak var delegate: YPLibraryViewDelegate?
     internal var v: YPLibraryView!
     internal var isProcessing = false // true if video or image is in processing state
-    internal var selectedItems = [YPLibrarySelection]()
+    internal var selectedItems = [YPLibrarySelection]() 
     internal let mediaManager = LibraryMediaManager()
     internal var multipleSelectionEnabled = false
     internal var currentlySelectedIndex: Int = 0
@@ -64,7 +64,7 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
         registerForTapOnPreview()
         refreshMediaRequest()
 
-        v.assetViewContainer.multipleSelectionButton.isHidden = !(YPConfig.library.maxNumberOfItems > 1)
+        v.assetViewContainer.multipleSelectionButton.isHidden = true
         v.maxNumberWarningLabel.text = String(format: YPConfig.wordings.warningMaxItemsLimit,
 											  YPConfig.library.maxNumberOfItems)
         
@@ -195,14 +195,15 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
             if selectedItems.isEmpty && YPConfig.library.preSelectItemOnMultipleSelection,
 				delegate?.libraryViewShouldAddToSelection(indexPath: IndexPath(row: currentlySelectedIndex, section: 0),
 														  numSelections: selectedItems.count) ?? true {
-//                let asset = mediaManager.fetchResult[currentlySelectedIndex]
-//                selectedItems = [
-//                    YPLibrarySelection(index: currentlySelectedIndex,
-//                                       cropRect: v.currentCropRect(),
-//                                       scrollViewContentOffset: v.assetZoomableView!.contentOffset,
-//                                       scrollViewZoomScale: v.assetZoomableView!.zoomScale,
-//                                       assetIdentifier: asset.localIdentifier)
-//                ]
+                selectedItems.removeAll()
+                let asset = mediaManager.fetchResult[currentlySelectedIndex]
+                selectedItems = [
+                    YPLibrarySelection(index: currentlySelectedIndex,
+                                       cropRect: v.currentCropRect(),
+                                       scrollViewContentOffset: v.assetZoomableView!.contentOffset,
+                                       scrollViewZoomScale: v.assetZoomableView!.zoomScale,
+                                       assetIdentifier: asset.localIdentifier)
+                ]
             }
         } else {
             selectedItems.removeAll()
@@ -243,10 +244,10 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
         if mediaManager.hasResultItems {
             changeAsset(mediaManager.fetchResult[0])
             v.collectionView.reloadData()
-            v.collectionView.selectItem(at: IndexPath(row: 0, section: 0),
-                                             animated: false,
-                                             scrollPosition: UICollectionView.ScrollPosition())
             if !multipleSelectionEnabled && YPConfig.library.preSelectItemOnMultipleSelection {
+                v.collectionView.selectItem(at: IndexPath(row: 0, section: 0),
+                                                 animated: false,
+                                                 scrollPosition: UICollectionView.ScrollPosition())
                 addToSelection(indexPath: IndexPath(row: 0, section: 0))
             }
         } else {
