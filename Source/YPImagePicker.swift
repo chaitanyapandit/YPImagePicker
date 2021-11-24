@@ -163,7 +163,8 @@ open class YPImagePicker: UINavigationController {
                         self?.didSelect(items: [outputMedia])
                     }
                     self?.pushViewController(videoFiltersVC, animated: true)
-                } else {
+                }
+                else {
                     self?.didSelect(items: [YPMediaItem.video(v: video)])
                 }
             }
