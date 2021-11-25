@@ -13,23 +13,30 @@ class YPMultipleSelectionIndicator: UIView {
     
     let circle = UIView()
     let label = UILabel()
+    let checkmarkImageView = UIImageView()
     var selectionColor = UIColor.ypSystemBlue
 
     convenience init() {
         self.init(frame: .zero)
         
         let size: CGFloat = 20
-        
+        let checkmarkSize = 10
         sv(
             circle,
+            checkmarkImageView,
             label
         )
         
         circle.fillContainer()
         circle.size(size)
         label.fillContainer()
-        
+        checkmarkImageView.centerInContainer().size(50%)
+
+        circle.backgroundColor = UIColor.ypSystemBlue
         circle.layer.cornerRadius = size / 2.0
+        
+        checkmarkImageView.tintColor = UIColor.white
+        
         label.textAlignment = .center
         label.textColor = .white
         label.font = YPConfig.fonts.multipleSelectionIndicatorFont
@@ -39,16 +46,21 @@ class YPMultipleSelectionIndicator: UIView {
     
     func set(number: Int?) {
         label.isHidden = (number == nil)
+        label.text = nil
         if let number = number {
             circle.backgroundColor = selectionColor
             circle.layer.borderColor = UIColor.clear.cgColor
             circle.layer.borderWidth = 0
-            label.text = "\(number)"
+            if #available(iOS 13.0, *) {
+                checkmarkImageView.image = UIImage(systemName: "checkmark")
+            } else {
+                checkmarkImageView.image = UIImage(named: "checkmark.")
+            }
         } else {
             circle.backgroundColor = UIColor.white.withAlphaComponent(0.3)
             circle.layer.borderColor = UIColor.white.cgColor
             circle.layer.borderWidth = 1
-            label.text = ""
+            checkmarkImageView.image = nil
         }
     }
 }
