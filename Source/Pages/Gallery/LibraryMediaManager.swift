@@ -210,7 +210,7 @@ class LibraryMediaManager {
         }
     }
     
-    func forseCancelExporting() {
+    func forceCancelExporting() {
         for s in self.currentExportSessions {
             s.cancelExport()
         }
