@@ -54,7 +54,7 @@ class YPMultipleSelectionIndicator: UIView {
             if #available(iOS 13.0, *) {
                 checkmarkImageView.image = UIImage(systemName: "checkmark")
             } else {
-                checkmarkImageView.image = UIImage(named: "checkmark.")
+                checkmarkImageView.image = UIImage(named: "checkmark")
             }
         } else {
             circle.backgroundColor = UIColor.white.withAlphaComponent(0.3)
@@ -80,12 +80,10 @@ class YPLibraryViewCell: UICollectionViewCell {
         sv(
             imageView,
             durationLabel,
-            selectionOverlay,
             multipleSelectionIndicator
         )
 
         imageView.fillContainer()
-        selectionOverlay.fillContainer()
         layout(
             durationLabel-5-|,
             5
@@ -101,8 +99,6 @@ class YPLibraryViewCell: UICollectionViewCell {
         durationLabel.textColor = .white
         durationLabel.font = YPConfig.fonts.durationFont
         durationLabel.isHidden = true
-        selectionOverlay.backgroundColor = .white
-        selectionOverlay.alpha = 0
         backgroundColor = .ypSecondarySystemBackground
         setAccessibilityInfo()
     }

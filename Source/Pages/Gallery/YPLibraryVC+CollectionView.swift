@@ -180,12 +180,9 @@ extension YPLibraryVC: UICollectionViewDelegate {
             
         if multipleSelectionEnabled {
             let cellIsInTheSelectionPool = isInSelectionPool(indexPath: indexPath)
-            let cellIsCurrentlySelected = previouslySelectedIndexPath.row == currentlySelectedIndex
             if cellIsInTheSelectionPool {
-                if cellIsCurrentlySelected {
-                    delegate?.libraryViewDidDeselect(asset: getAsset(indexPath: previouslySelectedIndexPath))
-                    deselect(indexPath: indexPath)
-                }
+                delegate?.libraryViewDidDeselect(asset: getAsset(indexPath: previouslySelectedIndexPath))
+                deselect(indexPath: indexPath)
             } else if isLimitExceeded == false {
                 addToSelection(indexPath: indexPath)
                 if let selectedCell = collectionView.cellForItem(at: indexPath) as? YPLibraryViewCell,
