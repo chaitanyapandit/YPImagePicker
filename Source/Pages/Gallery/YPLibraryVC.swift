@@ -153,6 +153,11 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
         PHPhotoLibrary.shared().unregisterChangeObserver(self)
     }
     
+    private func updateEmptyView() {
+        guard self.selectedItems.isEmpty else { return }
+        self.v.hideLoader()
+    }
+    
     // MARK: - Crop control
     
     @objc
@@ -242,7 +247,6 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
         }
         
         if mediaManager.hasResultItems {
-            v.assetZoomableView.clearAsset()
             v.hideLoader()
             v.collectionView.reloadData()
             if !multipleSelectionEnabled && YPConfig.library.preSelectItemOnMultipleSelection {
@@ -268,7 +272,6 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
                 }
             })
         }
-        
         scrollToTop()
     }
     
@@ -289,6 +292,11 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
         v.collectionView.contentOffset = CGPoint.zero
     }
     
+    func resetZoomableView() {
+        guard self.selectedItems.isEmpty else { return }
+        self.v.assetZoomableView.clearAsset()
+    }
+    
     // MARK: - ScrollViewDelegate
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -296,6 +304,8 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
             mediaManager.updateCachedAssets(in: self.v.collectionView)
         }
     }
+    
+    private var isLoadingImage = false
     
     func changeAsset(_ asset: PHAsset) {
         delegate?.libraryViewStartedLoadingImage()
@@ -308,6 +318,7 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
                 self.v.hideLoader()
                 self.delegate?.libraryViewFinishedLoading()
             }
+            self.isLoadingImage = false
         }
         
         let updateCropInfo = {
@@ -315,6 +326,7 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
         }
 		
         // MARK: add a func(updateCropInfo) after crop multiple
+        self.isLoadingImage = true
         DispatchQueue.global(qos: .userInitiated).async {
             switch asset.mediaType {
             case .image:

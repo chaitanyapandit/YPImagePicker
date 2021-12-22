@@ -73,7 +73,11 @@ extension YPLibraryVC {
                 currentlySelectedIndex = previouslySelectedIndexPath.row
                 changeAsset(mediaManager.fetchResult[previouslySelectedIndexPath.row])
             }
-			
+            
+            if self.selectedItems.isEmpty {
+                self.resetZoomableView()
+            }
+            			
             checkLimit()
         }
     }
