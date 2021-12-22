@@ -160,7 +160,7 @@ class ExampleViewController: UIViewController {
         config.library.defaultMultipleSelection = true
         config.library.maxNumberOfItems = 5
         config.gallery.hidesRemoveButton = false
-        config.library.preSelectItemOnMultipleSelection = false
+        config.library.preSelectItemOnMultipleSelection = true
         /* Disable scroll to change between mode */
         // config.isScrollToChangeModesEnabled = false
         // config.library.minNumberOfItems = 2

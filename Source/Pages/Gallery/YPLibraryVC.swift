@@ -254,6 +254,20 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
             delegate?.libraryViewHaveNoItems()
         }
 
+        if YPConfig.library.preSelectItemOnMultipleSelection,
+            mediaManager.hasResultItems,
+            let asset = mediaManager.fetchResult[0] as PHAsset? {
+            mediaManager.imageManager?.requestImage(for: asset,
+                                                       targetSize: v.cellSize(),
+                                                       contentMode: .aspectFill,
+                                                       options: nil,
+                                                       resultHandler: { image, _ in
+                if let image = image {
+                    self.delegate?.libraryViewDidselect(asset: asset, image: image)
+                }
+            })
+        }
+        
         scrollToTop()
     }
     
