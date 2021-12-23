@@ -247,7 +247,7 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
         }
         
         if mediaManager.hasResultItems {
-            v.hideLoader()
+            changeAsset(mediaManager.fetchResult[0])
             v.collectionView.reloadData()
             if !multipleSelectionEnabled && YPConfig.library.preSelectItemOnMultipleSelection {
                 v.collectionView.selectItem(at: IndexPath(row: 0, section: 0),

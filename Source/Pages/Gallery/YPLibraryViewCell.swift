@@ -20,7 +20,6 @@ class YPMultipleSelectionIndicator: UIView {
         self.init(frame: .zero)
         
         let size: CGFloat = 20
-        let checkmarkSize = 10
         sv(
             circle,
             checkmarkImageView,
@@ -47,7 +46,7 @@ class YPMultipleSelectionIndicator: UIView {
     func set(number: Int?) {
         label.isHidden = (number == nil)
         label.text = nil
-        if let number = number {
+        if number != nil {
             circle.backgroundColor = selectionColor
             circle.layer.borderColor = UIColor.clear.cgColor
             circle.layer.borderWidth = 0
@@ -80,10 +79,12 @@ class YPLibraryViewCell: UICollectionViewCell {
         sv(
             imageView,
             durationLabel,
+            selectionOverlay,
             multipleSelectionIndicator
         )
 
         imageView.fillContainer()
+        selectionOverlay.fillContainer()
         layout(
             durationLabel-5-|,
             5
@@ -99,11 +100,13 @@ class YPLibraryViewCell: UICollectionViewCell {
         durationLabel.textColor = .white
         durationLabel.font = YPConfig.fonts.durationFont
         durationLabel.isHidden = true
+        selectionOverlay.backgroundColor = .white
+        selectionOverlay.alpha = 0
         backgroundColor = .ypSecondarySystemBackground
         setAccessibilityInfo()
     }
 
-    override var isSelected: Bool {
+    var showSelected: Bool = false {
         didSet { refreshSelection() }
     }
     
@@ -112,7 +115,7 @@ class YPLibraryViewCell: UICollectionViewCell {
     }
     
     private func refreshSelection() {
-        let showOverlay = isSelected || isHighlighted
+        let showOverlay = showSelected || isHighlighted
         selectionOverlay.alpha = showOverlay ? 0.6 : 0
     }
 }

@@ -64,8 +64,7 @@ extension YPLibraryVC {
             selectedItems.remove(at: positionIndex)
             // Refresh the numbers
             let selectedIndexPaths = selectedItems.map { IndexPath(row: $0.index, section: 0) }
-            v.collectionView.reloadItems(at: selectedIndexPaths)
-			
+
             // Replace the current selected image with the previously selected one
             if let previouslySelectedIndexPath = selectedIndexPaths.last {
                 v.collectionView.deselectItem(at: indexPath, animated: false)
@@ -73,11 +72,9 @@ extension YPLibraryVC {
                 currentlySelectedIndex = previouslySelectedIndexPath.row
                 changeAsset(mediaManager.fetchResult[previouslySelectedIndexPath.row])
             }
-            
-            if self.selectedItems.isEmpty {
-                self.resetZoomableView()
-            }
-            			
+            		
+            v.collectionView.reloadItems(at: selectedIndexPaths)
+
             checkLimit()
         }
     }
@@ -145,7 +142,7 @@ extension YPLibraryVC: UICollectionViewDelegate {
         cell.durationLabel.isHidden = !isVideo
         cell.durationLabel.text = isVideo ? YPHelper.formattedStrigFrom(asset.duration) : ""
         cell.multipleSelectionIndicator.isHidden = !multipleSelectionEnabled
-        cell.isSelected = currentlySelectedIndex == indexPath.row
+        cell.showSelected = currentlySelectedIndex == indexPath.row
         
         // Set correct selection number
         if let index = selectedItems.firstIndex(where: { $0.assetIdentifier == asset.localIdentifier }) {
@@ -185,8 +182,10 @@ extension YPLibraryVC: UICollectionViewDelegate {
         if multipleSelectionEnabled {
             let cellIsInTheSelectionPool = isInSelectionPool(indexPath: indexPath)
             if cellIsInTheSelectionPool {
-                delegate?.libraryViewDidDeselect(asset: getAsset(indexPath: previouslySelectedIndexPath))
-                deselect(indexPath: indexPath)
+                if self.selectedItems.count > 1 {
+                    delegate?.libraryViewDidDeselect(asset: getAsset(indexPath: previouslySelectedIndexPath))
+                    deselect(indexPath: indexPath)
+                }
             } else if isLimitExceeded == false {
                 addToSelection(indexPath: indexPath)
                 if let selectedCell = collectionView.cellForItem(at: indexPath) as? YPLibraryViewCell,
