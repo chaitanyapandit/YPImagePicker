@@ -89,15 +89,6 @@ extension YPLibraryVC {
         let asset = mediaManager.fetchResult[indexPath.item]
         let newSelection = YPLibrarySelection(index: indexPath.row, assetIdentifier: asset.localIdentifier)
         selectedItems.append(newSelection)
-        mediaManager.imageManager?.requestImage(for: asset,
-                                                   targetSize: v.cellSize(),
-                                                   contentMode: .aspectFill,
-                                                   options: nil,
-                                                   resultHandler: { image, _ in
-            if let image = image {
-                self.delegate?.libraryViewDidselect(asset: asset, image: image)
-            }
-        })
         checkLimit()
     }
     

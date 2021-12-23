@@ -143,6 +143,21 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
         if YPConfig.library.minNumberOfItems > 1 {
             multipleSelectionButtonTapped()
         }
+        
+        if YPConfig.library.preSelectItemOnMultipleSelection,
+           mediaManager.hasResultItems,
+           let firstItem = self.selectedItems.first,
+           let asset = mediaManager.fetchResult[firstItem.index] as PHAsset? {
+            mediaManager.imageManager?.requestImage(for: asset,
+                                                       targetSize: v.cellSize(),
+                                                       contentMode: .aspectFill,
+                                                       options: nil,
+                                                       resultHandler: { image, _ in
+                if let image = image {
+                    self.delegate?.libraryViewDidselect(asset: asset, image: image)
+                }
+            })
+        }
     }
     
     public override func viewWillDisappear(_ animated: Bool) {
