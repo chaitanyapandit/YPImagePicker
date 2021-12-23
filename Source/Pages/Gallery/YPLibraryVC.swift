@@ -93,7 +93,7 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
             return
         }
 
-        if YPConfig.library.defaultMultipleSelection || selectedItems.count > 1 {
+        if YPConfig.library.defaultMultipleSelection {
             showMultipleSelection()
         }
     }
