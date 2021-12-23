@@ -93,7 +93,7 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
             return
         }
 
-        if YPConfig.library.defaultMultipleSelection {
+        if YPConfig.library.defaultMultipleSelection || selectedItems.count > 1 {
             showMultipleSelection()
         }
     }
@@ -201,24 +201,7 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
 				delegate?.libraryViewShouldAddToSelection(indexPath: IndexPath(row: currentlySelectedIndex, section: 0),
 														  numSelections: selectedItems.count) ?? true {
                 selectedItems.removeAll()
-                let asset = mediaManager.fetchResult[currentlySelectedIndex]
-                selectedItems = [
-                    YPLibrarySelection(index: currentlySelectedIndex,
-                                       cropRect: v.currentCropRect(),
-                                       scrollViewContentOffset: v.assetZoomableView!.contentOffset,
-                                       scrollViewZoomScale: v.assetZoomableView!.zoomScale,
-                                       assetIdentifier: asset.localIdentifier)
-                ]
-                
-                mediaManager.imageManager?.requestImage(for: asset,
-                                                            targetSize: v.cellSize(),
-                                                            contentMode: .aspectFill,
-                                                            options: nil,
-                                                            resultHandler: { image, _ in
-                    if let image = image {
-                        self.delegate?.libraryViewDidselect(asset: asset, image: image)
-                    }
-                })
+                addToSelection(indexPath: IndexPath(row: currentlySelectedIndex, section: 0))
             }
         } else {
             selectedItems.removeAll()
