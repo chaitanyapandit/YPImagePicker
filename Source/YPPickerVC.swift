@@ -30,6 +30,12 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
         }
     }
     
+    public var leftBarItems: [UIBarButtonItem]? {
+        didSet {
+            updateUI()
+        }
+    }
+    
     public var leftBarButton: UIBarButtonItem? {
         didSet {
             updateUI()
@@ -294,6 +300,8 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
         }
         else if self.leftBarButton != nil {
             navigationItem.leftBarButtonItem = self.leftBarButton
+        } else if self.leftBarItems != nil {
+            navigationItem.leftBarButtonItems = self.leftBarItems
         }
         switch mode {
         case .library:

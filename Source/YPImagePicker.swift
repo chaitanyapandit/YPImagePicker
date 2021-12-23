@@ -34,6 +34,12 @@ open class YPImagePicker: UINavigationController {
         }
     }
     
+    public var leftBarItems: [UIBarButtonItem]? {
+        didSet {
+            self.picker.leftBarItems = self.leftBarItems
+        }
+    }
+
     public weak var imagePickerDelegate: YPImagePickerDelegate?
         
     public func didFinishPicking(completion: @escaping DidFinishPickingCompletion) {
