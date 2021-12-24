@@ -118,23 +118,9 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
 
             strongSelf.updateCropInfo()
         }
-        
-        if YPConfig.library.preSelectItemOnMultipleSelection,
-           mediaManager.hasResultItems,
-           let firstItem = self.selectedItems.first,
-           let asset = mediaManager.fetchResult[firstItem.index] as PHAsset? {
-            mediaManager.imageManager?.requestImage(for: asset,
-                                                       targetSize: v.cellSize(),
-                                                       contentMode: .aspectFill,
-                                                       options: nil,
-                                                       resultHandler: { image, _ in
-                if let image = image {
-                    self.delegate?.libraryViewDidselect(asset: asset, image: image)
-                }
-            })
-        }
-
     }
+    
+    private var isInitialImageSet = false
     
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -158,6 +144,23 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
         // Activate multiple selection when using `minNumberOfItems`
         if YPConfig.library.minNumberOfItems > 1 {
             multipleSelectionButtonTapped()
+        }
+        
+        if YPConfig.library.preSelectItemOnMultipleSelection,
+           mediaManager.hasResultItems,
+           let firstItem = self.selectedItems.first,
+           let asset = mediaManager.fetchResult[firstItem.index] as PHAsset? {
+            mediaManager.imageManager?.requestImage(for: asset,
+                                                       targetSize: v.cellSize(),
+                                                       contentMode: .aspectFill,
+                                                       options: nil,
+                                                       resultHandler: { image, _ in
+                if let image = image,
+                   self.isInitialImageSet == false {
+                    self.isInitialImageSet = true
+                    self.delegate?.libraryViewDidselect(asset: asset, image: image)
+                }
+            })
         }
     }
     
