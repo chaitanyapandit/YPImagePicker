@@ -17,6 +17,7 @@ public protocol YPLibraryViewDelegate: AnyObject {
     func libraryViewFinishedLoading()
     func libraryViewDidToggleMultipleSelection(enabled: Bool)
     func libraryViewDidDeselect(asset: PHAsset)
+    func libraryViewDidUpdateSelectedAsset(assetId: String, image: UIImage)
     func libraryViewDidselect(asset: PHAsset, image: UIImage)
     func libraryViewShouldAddToSelection(indexPath: IndexPath, numSelections: Int) -> Bool
     func libraryViewHaveNoItems()
