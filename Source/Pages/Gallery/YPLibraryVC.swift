@@ -409,7 +409,7 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
     
     // MARK: - Fetching Media
     
-    private func fetchImageAndCrop(for asset: PHAsset,
+    func fetchImageAndCrop(for asset: PHAsset,
                                    withCropRect: CGRect? = nil,
                                    callback: @escaping (_ photo: UIImage, _ exif: [String: Any]) -> Void) {
         delegate?.libraryViewDidTapNext()
@@ -455,6 +455,29 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
                                                       cropRect: rect,
                                                       duration: timeDuration,
                                                       callback: callback)
+    }
+    
+    public func getImages(callback: @escaping (([YPMediaItem]) -> Void)) {
+        self.selectedMedia { photo in
+            callback([])
+        } videoCallback: { videoURL in
+            callback([])
+        } multipleItemsCallback: { items in
+            callback(items)
+        }
+    }
+    
+    public func getPhotoMedia(indexPath: IndexPath, callback: @escaping (_ photo: YPMediaPhoto) -> Void) {
+        let asset = mediaManager.fetchResult[indexPath.item]
+        var newSelection = YPLibrarySelection(index: indexPath.row, assetIdentifier: asset.localIdentifier)
+        newSelection.scrollViewContentOffset = v.assetZoomableView.contentOffset
+        newSelection.scrollViewZoomScale = v.assetZoomableView.zoomScale
+        newSelection.cropRect = v.currentCropRect()
+        
+        self.fetchImageAndCrop(for: asset, withCropRect: newSelection.cropRect) { photo, exif in
+            let pic = YPMediaPhoto(image: photo.resizedImageIfNeeded(), asset: asset)
+            callback(pic)
+        }
     }
     
     public func selectedMedia(photoCallback: @escaping (_ photo: YPMediaPhoto) -> Void,

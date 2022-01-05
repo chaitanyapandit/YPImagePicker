@@ -8,6 +8,7 @@
 
 import UIKit
 import Photos
+import PhotosUI
 
 extension YPLibraryVC {
     var isLimitExceeded: Bool { return selectedItems.count >= YPConfig.library.maxNumberOfItems }
@@ -178,7 +179,7 @@ extension YPLibraryVC: UICollectionViewDelegate {
             collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
         }
         v.refreshImageCurtainAlpha()
-            
+                
         if multipleSelectionEnabled {
             let cellIsInTheSelectionPool = isInSelectionPool(indexPath: indexPath)
             if cellIsInTheSelectionPool {
