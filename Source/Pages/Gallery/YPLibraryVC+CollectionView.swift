@@ -182,6 +182,7 @@ extension YPLibraryVC: UICollectionViewDelegate {
                 
         if multipleSelectionEnabled {
             let cellIsInTheSelectionPool = isInSelectionPool(indexPath: indexPath)
+            let cellIsCurrentlySelected = previouslySelectedIndexPath.row == currentlySelectedIndex
             if cellIsInTheSelectionPool {
                 delegate?.libraryViewDidDeselect(asset: getAsset(indexPath: previouslySelectedIndexPath))
                 deselect(indexPath: indexPath)
