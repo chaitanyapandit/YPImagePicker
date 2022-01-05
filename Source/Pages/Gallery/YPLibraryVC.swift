@@ -459,7 +459,7 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
     
     public func getImages(callback: @escaping (([YPMediaItem]) -> Void)) {
         self.selectedMedia { photo in
-            callback([])
+            callback([YPMediaItem.photo(p: photo)])
         } videoCallback: { videoURL in
             callback([])
         } multipleItemsCallback: { items in
