@@ -13,7 +13,6 @@ import Photos
 protocol YPPickerVCDelegate: AnyObject {
     func libraryHasNoItems()
     func didSelectAsset(asset: PHAsset, image: UIImage)
-    func didUpdateAssetImage(assetId: String, image: UIImage)
     func didDeselectAsset(asset: PHAsset)
     func shouldAddToSelection(indexPath: IndexPath, numSelections: Int) -> Bool
 }
@@ -367,11 +366,7 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
 }
 
 extension YPPickerVC: YPLibraryViewDelegate {
-    
-    public func libraryViewDidUpdateSelectedAsset(assetId: String, image: UIImage) {
-        self.pickerVCDelegate?.didUpdateAssetImage(assetId: assetId, image: image)
-    }
-    
+        
     public func libraryViewDidselect(asset: PHAsset, image: UIImage) {
         self.pickerVCDelegate?.didSelectAsset(asset: asset, image: image)
     }

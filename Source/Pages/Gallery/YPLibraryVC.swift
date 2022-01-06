@@ -368,18 +368,7 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
         
         return true
     }
-    
-    public func notifyUpdatedAsset(at index: Int) {
-        guard self.selectedItems.indices.contains(index),
-              let item = self.selectedItems[index] as YPLibrarySelection? else { return }
-        let asset = mediaManager.fetchResult[index]
-        let cropRect = item.cropRect ?? DispatchQueue.main.sync { v.currentCropRect() }
-        let ts = targetSize(for: asset, cropRect: cropRect)
-        mediaManager.imageManager?.fetchImage(for: asset, cropRect: cropRect, targetSize: ts, callback: { image, exif in
-            self.delegate?.libraryViewDidUpdateSelectedAsset(assetId: asset.localIdentifier, image: image)
-        })
-    }
-    
+        
     // MARK: - Stored Crop Position
     
     internal func updateCropInfo(shouldUpdateOnlyIfNil: Bool = false) {
@@ -400,7 +389,6 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
         // Replace
         selectedItems.remove(at: selectedAssetIndex)
         selectedItems.insert(selectedAsset, at: selectedAssetIndex)
-        notifyUpdatedAsset(at: selectedAssetIndex)
     }
     
     internal func fetchStoredCrop() -> YPLibrarySelection? {
