@@ -50,11 +50,8 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
         guard isInitialized == false else {
             return
         }
-
-        defer {
-            isInitialized = true
-        }
-        
+        isInitialized = true
+    
         mediaManager.initialize()
         mediaManager.v = v
 
@@ -575,7 +572,7 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
                     self.delegate?.libraryViewFinishedLoading()
                 }
             } else {
-                let asset = selectedAssets.first!.asset
+                guard let asset = selectedAssets.first?.asset else { return }
                 switch asset.mediaType {
                 case .audio, .unknown:
                     return
