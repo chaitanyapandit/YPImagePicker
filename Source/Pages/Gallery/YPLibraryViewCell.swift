@@ -20,7 +20,7 @@ class YPMultipleSelectionIndicator: UIView {
         self.init(frame: .zero)
         
         let size: CGFloat = 20
-        sv(
+        subviews(
             circle,
             checkmarkImageView,
             label
@@ -76,7 +76,7 @@ class YPLibraryViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        sv(
+        subviews(
             imageView,
             durationLabel,
             selectionOverlay,
@@ -103,7 +103,7 @@ class YPLibraryViewCell: UICollectionViewCell {
         selectionOverlay.backgroundColor = .white
         selectionOverlay.alpha = 0
         backgroundColor = .ypSecondarySystemBackground
-        setAccessibilityInfo()
+//        setAccessibilityInfo()
     }
 
     var showSelected: Bool = false {
@@ -120,10 +120,10 @@ class YPLibraryViewCell: UICollectionViewCell {
     }
 }
 
-extension YPLibraryViewCell: Accessibility {
-    func setAccessibilityInfo() {
-        isAccessibilityElement = true
-        self.accessibilityIdentifier = "YPLibraryViewCell"
-        self.accessibilityLabel = "Library Image"
-    }
-}
+//extension YPLibraryViewCell: Accessibility {
+//    func setAccessibilityInfo() {
+//        isAccessibilityElement = true
+//        self.accessibilityIdentifier = "YPLibraryViewCell"
+//        self.accessibilityLabel = "Library Image"
+//    }
+//}
