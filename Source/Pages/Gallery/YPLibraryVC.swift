@@ -50,6 +50,7 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
         guard isInitialized == false else {
             return
         }
+        
         isInitialized = true
     
         mediaManager.initialize()
