@@ -53,8 +53,8 @@ final class YPCropView: UIView {
         
     private func setupViewHierarchy() {
         
-        subviews(
-            containerView.subviews(
+        sv(
+            containerView.sv(
                 imageView,
                 topCurtain,
                 leadingCurtain,
