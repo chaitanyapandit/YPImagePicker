@@ -57,7 +57,9 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
         mediaManager.v = v
 
         setupCollectionView()
-        registerForLibraryChanges()
+        doAfterLibraryPermissionCheck {
+            registerForLibraryChanges()
+        }
         panGestureHelper.registerForPanGesture(on: v)
         registerForTapOnPreview()
         refreshMediaRequest()
