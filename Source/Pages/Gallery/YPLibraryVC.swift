@@ -58,7 +58,7 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
 
         setupCollectionView()
         doAfterLibraryPermissionCheck {
-            registerForLibraryChanges()
+            self.registerForLibraryChanges()
         }
         panGestureHelper.registerForPanGesture(on: v)
         registerForTapOnPreview()
