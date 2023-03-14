@@ -88,8 +88,8 @@ final class YPCropView: UIView {
         cropArea.Top == topCurtain.Bottom
         cropArea.Bottom == bottomCurtain.Top
           
-        |leadingCurtain-0-cropArea-0-trailingCurtain|
-        
+        |leadingCurtain--0--cropArea--0--trailingCurtain|
+
         grid.followEdges(cropArea)
         
         layout(

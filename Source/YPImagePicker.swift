@@ -58,7 +58,6 @@ open class YPImagePicker: UINavigationController {
         super.init(nibName: nil, bundle: nil)
         modalPresentationStyle = .fullScreen // Force .fullScreen as iOS 13 now shows modals as cards by default.
         picker.pickerVCDelegate = self
-        navigationBar.tintColor = .ypLabel
     }
 
     public func getImages(completion: @escaping (([YPMediaItem]) -> Void)) {
@@ -99,6 +98,8 @@ open class YPImagePicker: UINavigationController {
         viewControllers = [picker]
         setupLoadingView()
         navigationBar.isTranslucent = false
+        navigationBar.tintColor = .ypLabel
+        view.backgroundColor = .ypSystemBackground
 
         picker.didSelectItems = { [weak self] items in
             // Use Fade transition instead of default push animation

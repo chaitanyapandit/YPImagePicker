@@ -118,12 +118,10 @@ class YPLibraryViewCell: UICollectionViewCell {
         let showOverlay = showSelected || isHighlighted
         selectionOverlay.alpha = showOverlay ? 0.6 : 0
     }
-}
 
-//extension YPLibraryViewCell: Accessibility {
-//    func setAccessibilityInfo() {
-//        isAccessibilityElement = true
-//        self.accessibilityIdentifier = "YPLibraryViewCell"
-//        self.accessibilityLabel = "Library Image"
-//    }
-//}
+    private func setAccessibilityInfo() {
+        isAccessibilityElement = true
+        self.accessibilityIdentifier = "YPLibraryViewCell"
+        self.accessibilityLabel = "Library Image"
+    }
+}
