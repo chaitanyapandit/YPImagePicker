@@ -39,7 +39,7 @@ internal final class YPLibraryView: UIView {
     /// At the bottom there is a view that is visible when selected a limit of items with multiple selection
     internal let maxNumberWarningView: UIView = {
         let v = UIView()
-        v.backgroundColor = .ypSecondarySystemBackground
+        v.backgroundColor = .ypSystemBackground
         v.isHidden = true
         return v
     }()
